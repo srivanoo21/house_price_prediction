@@ -4,6 +4,7 @@ seaborn
 matplotlib
 PyYAML
 scipy
+xgboost
 ipykernel
 ipython
 scikit-learn
@@ -17,5 +18,6 @@ pathlib
 dataclasses
 datetime
 pickle
+streamlit
 
 -e .
