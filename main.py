@@ -2,6 +2,7 @@ from src.house_pricing.pipeline.stage_01_data_ingestion import DataIngestionPipe
 from src.house_pricing.pipeline.stage_02_data_validation import DataValidationPipeline
 from src.house_pricing.pipeline.stage_03_data_transformation import DataTransformationPipeline
 from src.house_pricing.pipeline.stage_04_model_trainer import ModelTrainerPipeline
+from src.house_pricing.pipeline.prediction import PredictionPipeline
 from src.house_pricing.logger import logging
 
 
@@ -43,6 +44,18 @@ try:
     logging.info(f">>>> stage {STAGE_NAME} started <<<<")
     model_train = ModelTrainerPipeline()
     model_train.main()
+    logging.info(f">>>> stage {STAGE_NAME} completed <<<<")
+except Exception as e:
+    logging.exception(e)
+    raise e
+
+
+STAGE_NAME = "Test data prediction"
+try:
+    logging.info(f">>>> stage {STAGE_NAME} started <<<<")
+    pred = PredictionPipeline()
+    pred.get_transformed_data()
+    pred.predict_data()
     logging.info(f">>>> stage {STAGE_NAME} completed <<<<")
 except Exception as e:
     logging.exception(e)

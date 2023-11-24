@@ -27,8 +27,9 @@ class ModelTrainer:
         '''
         split the input data into training and validation set'''
 
-        X = train_data.drop(labels=target_column, axis=1)
-        Y = train_data.target_column
+        X = train_data.drop(labels=[target_column], axis=1)
+        Y = train_data[target_column]
+        logging.info("Data spitting for input and target columns are now prepared")
 
         xtrain, xval, ytrain, yval = train_test_split(X, Y, test_size=0.2, random_state=40)
         logging.info(f"The shape of training data is {xtrain.shape}")
@@ -36,35 +37,7 @@ class ModelTrainer:
         
         return xtrain, xval, ytrain, yval
 
-    
 
-    # def model_evaluate(self, xval, yval, ypred, model_type):
-        
-    #     print(f"model type is {model_type}")
-    #     mean_cross_val_score = np.abs(np.mean(cross_val_score(dtr, X, Y, scoring='neg_mean_absolute_error', cv=5)))
-    #     print(f"mean of cross validation score is {mean_cross_val_score}")
-    #     print(f"mean absolute score for {model_type} is {mean_absolute_error(ypred, yval)}")
-    #     print(f"R2 score is {r2_score(ypred, yval)}")
-    #     r = r2_score(ypred, yval)
-    #     n = xval.shape[0]
-    #     p = xval.shape[1]
-    #     adjr = 1-(1-r)*(n-1)/(n-p-1)
-    #     print(f"Adjusted R2 score is {adjr}")
-
-
-    # def model_train(self, xtrain, ytrain, xval, yval, model_type='RFR'):
-
-    #     if model_type == "DTR":
-    #         dtr = DecisionTreeRegressor(random_state=30, criterion='absolute_error', max_depth=10)
-    #         model = dtr.fit(xtrain, ytrain)
-    #     elif model_type == 'RFR':
-    #         rfr = RandomForestRegressor(random_state=30, criterion='absolute_error', max_depth=10, n_estimators=20)
-    #         model = rfr.fit(xtrain, ytrain)
-
-    #     ypred = model.predict(xval)
-    #     self.model_trainer_config.model_evaluate(xval, yval, ypred, model_type)
-
-    
 
     def initiate_model_trainer(self):
         '''
@@ -83,9 +56,9 @@ class ModelTrainer:
                 "Linear Regression": LinearRegression(),
                 "Decision Tree": DecisionTreeRegressor(),
                 "Random Forest": RandomForestRegressor(),
-                "AdaBoost Regressor": AdaBoostRegressor(),
-                "Gradient Boosting": GradientBoostingRegressor(),
-                "XGBRegressor": XGBRegressor()
+                "AdaBoost Regressor": AdaBoostRegressor()
+                # "Gradient Boosting": GradientBoostingRegressor(),
+                # "XGBRegressor": XGBRegressor()
             }
 
             params={
@@ -101,19 +74,19 @@ class ModelTrainer:
                     # 'max_features':['sqrt','log2',None],
                     'n_estimators': [8,16,32,64,128,256]
                 },
-                "Gradient Boosting":{
-                    # 'loss':['squared_error', 'huber', 'absolute_error', 'quantile'],
-                    'learning_rate':[.1,.01,.05,.001],
-                    'subsample':[0.6,0.7,0.75,0.8,0.85,0.9],
-                    # 'criterion':['squared_error', 'friedman_mse'],
-                    # 'max_features':['auto','sqrt','log2'],
-                    'n_estimators': [8,16,32,64,128,256]
-                },
+                # "Gradient Boosting":{
+                #     # 'loss':['squared_error', 'huber', 'absolute_error', 'quantile'],
+                #     'learning_rate':[.1,.01,.05,.001],
+                #     'subsample':[0.6,0.7,0.75,0.8,0.85,0.9],
+                #     # 'criterion':['squared_error', 'friedman_mse'],
+                #     # 'max_features':['auto','sqrt','log2'],
+                #     'n_estimators': [8,16,32,64,128,256]
+                # },
                 
-                "XGBRegressor":{
-                    'learning_rate':[.1,.01,.05,.001],
-                    'n_estimators': [8,16,32,64,128,256]
-                },
+                # "XGBRegressor":{
+                #     'learning_rate':[.1,.01,.05,.001],
+                #     'n_estimators': [8,16,32,64,128,256]
+                # },
                 # "CatBoosting Regressor":{
                 #     'depth': [6,8,10],
                 #     'learning_rate': [0.01, 0.05, 0.1],
@@ -140,25 +113,21 @@ class ModelTrainer:
             best_cross_val_score = max(sorted(cross_val_report.values()))
             best_adj_r2_score = max(sorted(adj_r2_report.values()))
 
-            ## To get best model name from dict
+            ## To get best model name from dict on different areas
             best_model_name_train = list(train_report.keys())[
-                list(train_report.values()).index(best_train_score)
-            ]
+                list(train_report.values()).index(best_train_score)]
             best_model_train = models[best_model_name_train]
 
             best_model_name_val = list(val_report.keys())[
-                list(val_report.values()).index(best_val_score)
-            ]
+                list(val_report.values()).index(best_val_score)]
             best_model_val = models[best_model_name_val]
 
             best_model_name_cross_val = list(cross_val_report.keys())[
-                list(cross_val_report.values()).index(best_cross_val_score)
-            ]
+                list(cross_val_report.values()).index(best_cross_val_score)]
             best_model_cross_val = models[best_model_name_cross_val]
 
             best_model_name_adj_r2 = list(adj_r2_report.keys())[
-                list(adj_r2_report.values()).index(best_adj_r2_score)
-            ]
+                list(adj_r2_report.values()).index(best_adj_r2_score)]
             best_model_adj_r2 = models[best_model_name_adj_r2]
 
             # Displaying which model provides best score in which area
@@ -167,6 +136,7 @@ class ModelTrainer:
             logging.info(f"Best model for cross validation score is: {best_model_cross_val}")
             logging.info(f"Best model for adjusted r2 score is: {best_model_adj_r2}")
 
+            # Compare the best model for adjusted r2 score is for the threshold
             if best_adj_r2_score < 0.6:
                 raise CustomException("No best model found")
             logging.info(f"Best found model on both training and validation dataset")
@@ -178,11 +148,11 @@ class ModelTrainer:
             logging.info("Best Model is now saved in the artifacts")
                         
         except Exception as e:
-            raise CustomException(e,sys)
+            raise CustomException(e, sys)
         
 
 
-    def evaluate_models(train_data, target_column, xtrain, ytrain, xval, yval, models, param):
+    def evaluate_models(self, train_data, target_column, xtrain, ytrain, xval, yval, models, param):
         '''
         evaluate all the models using various metrics'''
 
@@ -201,7 +171,7 @@ class ModelTrainer:
 
                 model.set_params(**gs.best_params_)
                 model.fit(xtrain, ytrain)
-                mean_cross_val_score = np.abs(np.mean(cross_val_score(model, train_data, target_column, scoring='neg_mean_absolute_error', cv=3)))
+                mean_cross_val_score = np.abs(np.mean(cross_val_score(model, xtrain, ytrain, scoring='neg_mean_absolute_error', cv=3)))
 
                 ytrain_pred = model.predict(xtrain)
                 yval_pred = model.predict(xval)

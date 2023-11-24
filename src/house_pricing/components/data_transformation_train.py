@@ -36,7 +36,7 @@ class DataTransformation:
 
     def fill_top_missing_values(self, train_data):
         '''
-        Check and fill the top 5 missing columns with '0' in both training and testing dataset'''
+        Check and fill the top 5 missing columns with '0' in the training dataset'''
 
         miss1 = (train_data.isna().sum()/train_data.shape[0])*100
         miss1 = pd.DataFrame(miss1, columns=['count'])
@@ -56,7 +56,7 @@ class DataTransformation:
 
     def fill_missing_values(self, train_data):
         '''
-        Removing the rest of the missing columns from both training and testing dataset'''
+        Removing the rest of the missing columns from the training dataset'''
 
         cat, con = self.cat_con_df(train_data)
         train_data = self.fill_top_missing_values(train_data)
@@ -90,7 +90,10 @@ class DataTransformation:
         
         return train_data, cat, con
 
+
     def scaling(self, train_data):
+        '''
+        perform scaling of the train data'''
         
         ss = StandardScaler()
         train_data, cat, con = self.check_skew(train_data)
