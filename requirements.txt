@@ -1,0 +1,21 @@
+pandas
+numpy
+seaborn
+matplotlib
+PyYAML
+scipy
+ipykernel
+ipython
+scikit-learn
+tensorflow==2.5.0
+keras
+tensorflow.python
+os
+sys
+logging
+pathlib
+dataclasses
+datetime
+pickle
+
+-e .
