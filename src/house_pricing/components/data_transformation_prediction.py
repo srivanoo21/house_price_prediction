@@ -9,6 +9,7 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler, LabelEncoder
 from src.house_pricing.exception import CustomException
 from src.house_pricing.logger import logging
 from src.house_pricing.entity import DataTransformationConfig
+from src.house_pricing.utils import save_object
 
 
 class DataTransformation:
@@ -147,8 +148,11 @@ class DataTransformation:
             logging.info("The directory for the data transformation is now created")
 
             logging.info(f"Saving preprocessed testing data.")
-            test_data.to_csv(self.data_transformation_config.preprocessed_test_data_path, 
-                              index=False, header=True)
+
+            save_object(
+                file_path = self.data_transformation_config.preprocessed_test_data_path,
+                obj = test_data
+            )
             logging.info(f"Saved preprocessed testing data.")
 
             return self.data_transformation_config.preprocessed_test_data_path

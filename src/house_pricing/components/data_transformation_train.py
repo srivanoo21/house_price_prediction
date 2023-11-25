@@ -153,6 +153,7 @@ class DataTransformation:
             logging.info(f"Saving preprocessed training data.")
             train_data.to_csv(self.data_transformation_config.preprocessed_train_data_path, 
                               index=False, header=True)
+            
             logging.info(f"Saved preprocessed training data.")
 
             return self.data_transformation_config.preprocessed_train_data_path

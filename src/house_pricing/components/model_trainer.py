@@ -145,7 +145,7 @@ class ModelTrainer:
                 file_path = self.model_trainer_config.trained_model_file_path,
                 obj = best_model_adj_r2
             )
-            logging.info("Best Model is now saved in the artifacts")
+            logging.info(f"Best Model is now saved in the artifacts in {self.model_trainer_config.trained_model_file_path}")
                         
         except Exception as e:
             raise CustomException(e, sys)

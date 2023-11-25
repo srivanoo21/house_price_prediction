@@ -5,9 +5,11 @@ matplotlib
 PyYAML
 scipy
 xgboost
-ipykernel
-ipython
 fastapi==0.78.0
+pickle
+ipykernel
+uvicorn==0.18.3
+ipython
 scikit-learn
 tensorflow==2.5.0
 keras

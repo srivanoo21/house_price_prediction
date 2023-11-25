@@ -50,13 +50,13 @@ except Exception as e:
     raise e
 
 
-STAGE_NAME = "Test data prediction"
-try:
-    logging.info(f">>>> stage {STAGE_NAME} started <<<<")
-    pred = PredictionPipeline()
-    pred.get_transformed_data()
-    pred.predict_data()
-    logging.info(f">>>> stage {STAGE_NAME} completed <<<<")
-except Exception as e:
-    logging.exception(e)
-    raise e
+# STAGE_NAME = "Test data prediction"
+# try:
+#     logging.info(f">>>> stage {STAGE_NAME} started <<<<")
+#     pred = PredictionPipeline()
+#     pred.get_transformed_data()
+#     pred.predict_data()
+#     logging.info(f">>>> stage {STAGE_NAME} completed <<<<")
+# except Exception as e:
+#     logging.exception(e)
+#     raise e

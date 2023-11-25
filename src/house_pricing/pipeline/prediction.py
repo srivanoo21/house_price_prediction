@@ -30,7 +30,8 @@ class PredictionPipeline:
         perform prediction on test data and return the output along with the predicted values'''
 
         try:
-            test_data = self.config.preprocessed_test_data_path
+            test_data_path = self.config.preprocessed_test_data_path
+            test_data = load_object(file_path = test_data_path)
             logging.info("Test data to be predicted is fetched")
                          
             model_path = self.config.trained_model_file_path
