@@ -2,25 +2,21 @@ pandas
 numpy
 seaborn
 matplotlib
+pickleshare==0.7.5
 PyYAML
 scipy
 xgboost
 fastapi==0.78.0
-pickle
 ipykernel
 uvicorn==0.18.3
 ipython
 scikit-learn
-tensorflow==2.5.0
 keras
-tensorflow.python
-os
-sys
-logging
+tensorflow-estimator==2.11.0
+tensorflow-io-gcs-filesystem==0.31.0
 pathlib
 dataclasses
 datetime
-pickle
 streamlit
 
 -e .
